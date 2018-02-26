@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -21,6 +24,7 @@ public class BreedsActivity extends AppCompatActivity implements View.OnClickLis
 
     private SharedPreferences sharedPreferences;
     private BreedModel breedModel;
+    Retrofit retrofit;
     ImageView terryImage;
     ImageView spanielImage;
     ImageView retrieverImage;
@@ -54,11 +58,27 @@ public class BreedsActivity extends AppCompatActivity implements View.OnClickLis
         retriever = findViewById(R.id.retriever);
         poodle = findViewById(R.id.poodle);
 
+        //Onclicks for te specific layouts
+        terrier.setOnClickListener(this);
+        spaniel.setOnClickListener(this);
+        retriever.setOnClickListener(this);
+        poodle.setOnClickListener(this);
 
-        Retrofit retrofit = new Retrofit.Builder()
+
+        retrofit = new Retrofit.Builder()
                 .baseUrl("https://dog.ceo")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        getDogPic("terrier");
+        getDogPic("spaniel");
+        getDogPic("retriever");
+        getDogPic("poodle");
+
+    }
+
+
+    private void getDogPic(String dogType) {
         Api dogService = retrofit.create(Api.class);
 
         Call<BreedModel> getBreedModel = dogService.getDog("type");
@@ -131,6 +151,31 @@ public class BreedsActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+
+
+        switch (item.getItemId()) {
+            case R.id.logout_menu:
+                Intent intent = new Intent(BreedsActivity.this, LoginActivity.class);
+                intent.putExtra("logout", true);
+                startActivity(intent);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }
+
+

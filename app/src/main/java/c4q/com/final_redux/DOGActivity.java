@@ -15,6 +15,6 @@ public class DOGActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dog);
 
         Intent intent = getIntent();
-        Log.d(TAG, "onCreate: " + intent.getStringExtra("breedName"));
+        Log.d(TAG, "onCreate: " + intent.getStringExtra("breeds"));
     }
 }
