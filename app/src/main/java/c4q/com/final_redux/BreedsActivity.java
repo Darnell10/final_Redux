@@ -59,37 +59,37 @@ public class BreedsActivity extends AppCompatActivity implements View.OnClickLis
                 .baseUrl("https://dog.ceo")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        Api dogService =retrofit.create(Api.class);
+        Api dogService = retrofit.create(Api.class);
 
         Call<BreedModel> getBreedModel = dogService.getDog("type");
         getBreedModel.enqueue(new Callback<BreedModel>() {
             @Override
             public void onResponse(Call<BreedModel> call, Response<BreedModel> response) {
-               breedModel = response.body();
+                breedModel = response.body();
 
-               if(breedModel.getMessage().contains("terrier")){
-                   Picasso.with(BreedsActivity.this)
-                           .load(breedModel.getMessage())
-                           .into((Target) terrier);
-               }
+                if (breedModel != null && breedModel.getMessage().contains("terrier")) {
+                    Picasso.with(BreedsActivity.this)
+                            .load(breedModel.getMessage())
+                            .into((Target) terrier);
+                }
 
-               if(breedModel.getMessage().contains("spaniel")){
-                   Picasso.with(BreedsActivity.this)
-                           .load(breedModel.getMessage())
-                           .into((Target) spaniel);
-               }
+                if (breedModel != null && breedModel.getMessage().contains("spaniel")) {
+                    Picasso.with(BreedsActivity.this)
+                            .load(breedModel.getMessage())
+                            .into((Target) spaniel);
+                }
 
-               if (breedModel.getMessage().contains("retriever")){
-                   Picasso.with(BreedsActivity.this)
-                           .load(breedModel.getMessage())
-                           .into((Target) retriever);
-               }
+                if (breedModel != null && breedModel.getMessage().contains("retriever")) {
+                    Picasso.with(BreedsActivity.this)
+                            .load(breedModel.getMessage())
+                            .into((Target) retriever);
+                }
 
-               if (breedModel.getMessage().contains("poodle")){
-                   Picasso.with(BreedsActivity.this)
-                           .load(breedModel.getMessage())
-                           .into((Target) poodle);
-               }
+                if (breedModel != null && breedModel.getMessage().contains("poodle")) {
+                    Picasso.with(BreedsActivity.this)
+                            .load(breedModel.getMessage())
+                            .into((Target) poodle);
+                }
             }
 
             @Override
@@ -100,21 +100,37 @@ public class BreedsActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-        @Override
-        public void onClick (View view){
+    @Override
+    public void onClick(View view) {
 
-        switch (view.getId()){
+        switch (view.getId()) {
             //Switch case through layout
             case R.id.terry:
+                Intent terryIntent = new Intent(BreedsActivity.this, DOGActivity.class);
+                terryIntent.putExtra("breeds", "terrier");
+                startActivity(terryIntent);
+                break;
 
             case R.id.spaniel:
+                Intent spanielIntent = new Intent(BreedsActivity.this, DOGActivity.class);
+                spanielIntent.putExtra("breeds", "spaniel");
+                startActivity(spanielIntent);
+                break;
 
             case R.id.retriever:
+                Intent retrieverIntent = new Intent(BreedsActivity.this, DOGActivity.class);
+                retrieverIntent.putExtra("breeds", "retriever");
+                startActivity(retrieverIntent);
+                break;
 
             case R.id.poodle:
+                Intent poodleIntent = new Intent(BreedsActivity.this, DOGActivity.class);
+                poodleIntent.putExtra("breeds", "poodle");
+                startActivity(poodleIntent);
         }
-
-        }
-
 
     }
+
+
+
+}
